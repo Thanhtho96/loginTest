@@ -95,7 +95,7 @@ public class StaffController {
     }
 
     @PostMapping("/admin/advanceSearch")
-    public String getStudent(Model model, RedirectAttributes redirectAttributes,
+    public String getStudent(Model model,
                              @Param("name") String name,
                              @Param("startDate") String startDate,
                              @Param("endDate") String endDate,
@@ -112,7 +112,7 @@ public class StaffController {
         listStaff = (ArrayList<Staff>) staffService.searchByProperties(
                 name, startDateTemp, endDateTemp, phonenumber, address);
         model.addAttribute("listStaff", listStaff);
-        return "redirect:/admin/listStaff";
+        return "/admin/listStaff";
     }
 
 }
