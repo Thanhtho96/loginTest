@@ -35,4 +35,7 @@ dependencies {
 
     compile('net.sourceforge.nekohtml:nekohtml')
 
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+
 }
