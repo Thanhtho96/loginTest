@@ -14,7 +14,7 @@ public interface StaffRepository extends CrudRepository<Staff, Long> {
 //    @Query("from Staff st where st.name like %:name% " +
 //            "and (:startDate is null or st.birthday >=:startDate) and (:endDate is null or st.birthday <= :endDate) " +
 //            "and st.phonenumber like %:phonenumber% and st.address like %:address%")
-    @Query(value = "select * from staff where name like %:name%" +
+    @Query(value = "select * from staff where name like %:name% " +
             "and (:startDate is null birthday >= :startDate)" +
             "and (:endDate is null birthday <= :endDate)" +
             "and phonenumber like :phonenumber and address like :address", nativeQuery = true)
