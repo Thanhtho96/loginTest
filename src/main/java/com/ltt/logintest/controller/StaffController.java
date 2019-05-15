@@ -75,7 +75,7 @@ public class StaffController {
         return "listStaff";
     }
 
-    @GetMapping("/admin/editStaff/{id}")
+    @PostMapping("/admin/editStaff/{id}")
     public String showEditForm(@PathVariable("id") long id, Model model) {
         Staff staff = staffService.getStaffById(id);
         model.addAttribute("staff", staff);
