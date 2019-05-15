@@ -1,0 +1,125 @@
+package com.ltt.logintest.controller;
+
+import com.ltt.logintest.model.Staff;
+import com.ltt.logintest.service.StaffService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+@Controller
+@RequestMapping("/")
+public class StaffController {
+    @Autowired
+    private StaffService staffService;
+
+    private ArrayList<Staff> listStaff;
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "403";
+    }
+
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
+
+    @RequestMapping("/admin/listStaff")
+    public String listStudent(Model model) {
+        listStaff = (ArrayList<Staff>) staffService.getAllStaff();
+        model.addAttribute("listStaff", listStaff);
+        return "listStaff";
+    }
+
+    @GetMapping("/admin/search")
+    public String searchByName(Model model, @RequestParam("name") String name) {
+        listStaff = (ArrayList<Staff>) staffService.getStaffByName(name);
+        model.addAttribute("listStaff", listStaff);
+        return "listStaff";
+    }
+
+    @GetMapping("/admin/addStaff")
+    public String addStaff(Staff staff, Model model) {
+        model.addAttribute("staff", staff);
+        return "addStaff";
+    }
+
+    @PostMapping("/admin/saveStaff")
+    public String addUser(@Valid Staff staff, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "addStaff";
+        }
+
+        staffService.saveStaff(staff);
+        model.addAttribute("listStaff", staffService.getAllStaff());
+        return "listStaff";
+    }
+
+    @GetMapping("/admin/editStaff/{id}")
+    public String showEditForm(@PathVariable("id") long id, Model model) {
+        Staff staff = staffService.getStaffById(id);
+        model.addAttribute("staff", staff);
+        return "updateStaff";
+    }
+
+    @PostMapping("/admin/updateStaff/{id}")
+    public String updateUser(@PathVariable("id") long id, @Valid Staff staffEntity,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            staffEntity.setId(id);
+            return "updateStaff";
+        }
+        staffService.updateStaff(staffEntity);
+        model.addAttribute("listStaff", staffService.getAllStaff());
+        return "listStaff";
+    }
+
+    @GetMapping("/admin/deleteStaff/{id}")
+    public String deleteStaff(@PathVariable("id") long id, Model model) {
+        staffService.deleteStaff(id);
+        model.addAttribute("listStaff", staffService.getAllStaff());
+        return "listStaff";
+    }
+
+    @PostMapping("/admin/advanceSearch")
+    public String getStudent(Model model, RedirectAttributes redirectAttributes,
+                             @Param("name") String name,
+                             @Param("startDate") String startDate,
+                             @Param("endDate") String endDate,
+                             @Param("phonenumber") String phonenumber,
+                             @Param("address") String address) {
+        Date startDateTemp = null, endDateTemp = null;
+
+        try {
+            startDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+            endDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+        } catch (ParseException e) {
+        }
+
+        listStaff = (ArrayList<Staff>) staffService.searchByProperties(
+                name, startDateTemp, endDateTemp, phonenumber, address);
+        model.addAttribute("listStaff", listStaff);
+        return "listStaff";
+    }
+
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Staff</title>
+</head>
+<body>
+<form th:action="@{/admin/saveStaff}" method="post" th:object="${staff}">
+    <table>
+        <tr>
+            <th>Name</th>
+            <td><input type="text" th:field="*{name}" required></td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
+            <td><input type="date" th:field="*{birthday}" required></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td><input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" maxlength="10" th:field="*{phonenumber}"
+                       id="phoneNumber"></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><input type="text" th:field="*{address}" required></td>
+        </tr>
+    </table>
+    <button type="submit">ADD</button>
+</form>
+
+<script>
+    function setInputFilter(textbox, inputFilter) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+            textbox.addEventListener(event, function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                }
+            });
+        });
+    }
+
+    // Install input filters.
+    setInputFilter(document.getElementById("phoneNumber"), function (value) {
+        return /^\d*$/.test(value);
+    });
+</script>
+
+</body>
+</html>
