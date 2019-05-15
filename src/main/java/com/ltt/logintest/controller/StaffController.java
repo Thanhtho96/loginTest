@@ -65,7 +65,7 @@ public class StaffController {
 
         staffService.saveStaff(staff);
         model.addAttribute("listStaff", staffService.getAllStaff());
-        return "listStaff";
+        return "redirect:/admin/listStaff";
     }
 
     @PostMapping("/admin/editStaff/{id}")
@@ -84,14 +84,14 @@ public class StaffController {
         }
         staffService.updateStaff(staffEntity);
         model.addAttribute("listStaff", staffService.getAllStaff());
-        return "listStaff";
+        return "redirect:/admin/listStaff";
     }
 
     @PostMapping("/admin/deleteStaff/{id}")
     public String deleteStaff(@PathVariable("id") long id, Model model) {
         staffService.deleteStaff(id);
         model.addAttribute("listStaff", staffService.getAllStaff());
-        return "listStaff";
+        return "redirect:/admin/listStaff";
     }
 
     @PostMapping("/admin/advanceSearch")
@@ -112,7 +112,7 @@ public class StaffController {
         listStaff = (ArrayList<Staff>) staffService.searchByProperties(
                 name, startDateTemp, endDateTemp, phonenumber, address);
         model.addAttribute("listStaff", listStaff);
-        return "listStaff";
+        return "redirect:/admin/listStaff";
     }
 
 }
