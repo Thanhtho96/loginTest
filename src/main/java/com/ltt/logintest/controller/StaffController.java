@@ -51,14 +51,7 @@ public class StaffController {
         return "listStaff";
     }
 
-    @GetMapping("/admin/search")
-    public String searchByName(Model model, @RequestParam("name") String name) {
-        listStaff = (ArrayList<Staff>) staffService.getStaffByName(name);
-        model.addAttribute("listStaff", listStaff);
-        return "listStaff";
-    }
-
-    @GetMapping("/admin/addStaff")
+    @PostMapping("/admin/addStaff")
     public String addStaff(Staff staff, Model model) {
         model.addAttribute("staff", staff);
         return "addStaff";
@@ -94,7 +87,7 @@ public class StaffController {
         return "listStaff";
     }
 
-    @GetMapping("/admin/deleteStaff/{id}")
+    @PostMapping("/admin/deleteStaff/{id}")
     public String deleteStaff(@PathVariable("id") long id, Model model) {
         staffService.deleteStaff(id);
         model.addAttribute("listStaff", staffService.getAllStaff());
