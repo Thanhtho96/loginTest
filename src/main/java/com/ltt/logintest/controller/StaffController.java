@@ -4,11 +4,15 @@ import com.ltt.logintest.model.Staff;
 import com.ltt.logintest.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -25,7 +29,10 @@ public class StaffController {
     private ArrayList<Staff> listStaff;
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("username",userDetails.getUsername());
+        model.addAttribute("role",userDetails.getAuthorities());
         return "index";
     }
 
@@ -103,16 +110,26 @@ public class StaffController {
                              @Param("address") String address) {
         Date startDateTemp = null, endDateTemp = null;
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         try {
-            startDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-            endDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+            startDateTemp = simpleDateFormat.parse(startDate);
+            endDateTemp = simpleDateFormat.parse(endDate);
+
+            if (startDateTemp == null) {
+                startDateTemp = simpleDateFormat.parse("1970-01-01");
+            }
+            else if (endDateTemp == null){
+                Date date = new Date();
+                endDateTemp = simpleDateFormat.parse(simpleDateFormat.format(date));
+            }
         } catch (ParseException e) {
         }
 
         listStaff = (ArrayList<Staff>) staffService.searchByProperties(
                 name, startDateTemp, endDateTemp, phonenumber, address);
         model.addAttribute("listStaff", listStaff);
-        return "admin/listStaff";
+        return "listStaff";
     }
 
 }
