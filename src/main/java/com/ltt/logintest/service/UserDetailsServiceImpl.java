@@ -1,8 +1,8 @@
 package com.ltt.logintest.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.ltt.logintest.model.Role;
+import com.ltt.logintest.model.User;
+import com.ltt.logintest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ltt.logintest.model.Role;
-import com.ltt.logintest.model.User;
-import com.ltt.logintest.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

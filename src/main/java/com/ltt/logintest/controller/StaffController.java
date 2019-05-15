@@ -116,13 +116,11 @@ public class StaffController {
             if (startDate.equals("") && !endDate.equals("")) {
                 startDateTemp = simpleDateFormat.parse("1970-01-01");
                 endDateTemp = simpleDateFormat.parse(endDate);
-            }
-            else if (!startDate.equals("") && endDate.equals("")) {
+            } else if (!startDate.equals("") && endDate.equals("")) {
                 startDateTemp = simpleDateFormat.parse(startDate);
                 Date date = new Date();
                 endDateTemp = simpleDateFormat.parse(simpleDateFormat.format(date));
-            }
-            else if (startDate.equals("") && endDate.equals("")) {
+            } else if (startDate.equals("") && endDate.equals("")) {
                 startDateTemp = simpleDateFormat.parse("1970-01-01");
                 Date date = new Date();
                 endDateTemp = simpleDateFormat.parse(simpleDateFormat.format(date));

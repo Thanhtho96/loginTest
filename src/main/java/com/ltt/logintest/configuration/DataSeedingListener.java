@@ -1,17 +1,16 @@
 package com.ltt.logintest.configuration;
 
-import java.util.HashSet;
-
+import com.ltt.logintest.model.Role;
+import com.ltt.logintest.model.User;
+import com.ltt.logintest.repository.RoleRepository;
+import com.ltt.logintest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.ltt.logintest.model.Role;
-import com.ltt.logintest.model.User;
-import com.ltt.logintest.repository.RoleRepository;
-import com.ltt.logintest.repository.UserRepository;
+import java.util.HashSet;
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {

@@ -28,7 +28,7 @@ dependencies {
 //Use MySQL Connector-J
 //    compile('mysql:mysql-connector-java')
     //JPA Data (We are going to use Repositories, Entities, Hibernate, etc...)
-    compile ('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
 
 //Use Postgres Connector
     compile('org.postgresql:postgresql')
