@@ -30,9 +30,9 @@ public class StaffController {
 
     @GetMapping("/")
     public String index(Model model) {
-        UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("username",userDetails.getUsername());
-        model.addAttribute("role",userDetails.getAuthorities());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("role", userDetails.getAuthorities());
         return "index";
     }
 
@@ -113,15 +113,22 @@ public class StaffController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            startDateTemp = simpleDateFormat.parse(startDate);
-            endDateTemp = simpleDateFormat.parse(endDate);
-
-            if (startDateTemp == null) {
+            if (startDate.equals("")) {
                 startDateTemp = simpleDateFormat.parse("1970-01-01");
+                endDateTemp = simpleDateFormat.parse(endDate);
             }
-            else if (endDateTemp == null){
+            if (endDate.equals("")) {
+                startDateTemp = simpleDateFormat.parse(startDate);
                 Date date = new Date();
                 endDateTemp = simpleDateFormat.parse(simpleDateFormat.format(date));
+            }
+            if (startDate.equals("") && endDate.equals("")) {
+                startDateTemp = simpleDateFormat.parse("1970-01-01");
+                Date date = new Date();
+                endDateTemp = simpleDateFormat.parse(simpleDateFormat.format(date));
+            } else {
+                endDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+                startDateTemp = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
             }
         } catch (ParseException e) {
         }
