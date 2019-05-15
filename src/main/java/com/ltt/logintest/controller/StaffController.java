@@ -112,7 +112,7 @@ public class StaffController {
         listStaff = (ArrayList<Staff>) staffService.searchByProperties(
                 name, startDateTemp, endDateTemp, phonenumber, address);
         model.addAttribute("listStaff", listStaff);
-        return "/admin/listStaff";
+        return "admin/listStaff";
     }
 
 }
