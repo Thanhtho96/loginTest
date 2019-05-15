@@ -11,13 +11,14 @@ import java.util.List;
 public interface StaffRepository extends CrudRepository<Staff, Long> {
     List<Staff> findByName(String name);
 
-//    @Query("from Staff st where st.name like %:name% " +
-//            "and (:startDate is null or st.birthday >=:startDate) and (:endDate is null or st.birthday <= :endDate) " +
-//            "and st.phonenumber like %:phonenumber% and st.address like %:address%")
-    @Query(value = "select * from staff where name like :name " +
-            "and (:startDate is null or birthday >= :startDate)" +
-            "and (:endDate is null or birthday <= :endDate)" +
-            "and phonenumber like :phonenumber and address like :address", nativeQuery = true)
+    @Query("from Staff st where st.name like %:name% " +
+            "and ( st.birthday >=:startDate) " +
+            "and ( st.birthday <= :endDate) " +
+            "and st.phonenumber like %:phonenumber% and st.address like %:address%")
+//    @Query(value = "select * from staff where name like :name " +
+//            "and ( :startDate is null or birthday >= :startDate)" +
+//            "and ( :endDate is null or birthday <= :endDate)" +
+//            "and phonenumber like :phonenumber and address like :address", nativeQuery = true)
     List<Staff> searchByProperties(@Param("name") String name,
                                    @Param("startDate") Date birthday,
                                    @Param("endDate") Date endDate,
