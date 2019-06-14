@@ -28,6 +28,11 @@ public class StaffController {
 
     private ArrayList<Staff> listStaff;
 
+    @GetMapping("/error")
+    public String errorPage(){
+        return "error";
+    }
+
     @GetMapping("/")
     public String index(Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
