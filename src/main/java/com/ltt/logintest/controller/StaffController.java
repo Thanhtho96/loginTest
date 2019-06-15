@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -23,15 +24,19 @@ import java.util.Date;
 @Controller
 @RequestMapping("/")
 public class StaffController {
+
     @Autowired
     private StaffService staffService;
 
     private ArrayList<Staff> listStaff;
 
-    @GetMapping("/error")
-    public String errorPage(){
-        return "error";
-    }
+//    @GetMapping("/error")
+//    public String errorPage(Model model){
+//        int  a = (int) Math.floor(Math.random() * 2);
+//        String b = "images/dog_" + String.valueOf(a) +".jpg";
+//        model.addAttribute("b", b);
+//        return "error";
+//    }
 
     @GetMapping("/")
     public String index(Model model) {
