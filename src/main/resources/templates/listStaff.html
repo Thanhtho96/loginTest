@@ -47,8 +47,8 @@
 <form th:action="@{/admin/addStaff}" method="post">
     <input type="submit" value="ADD STAFF">
 </form>
-    
-    <!-- Đoạn script này ngăn không cho viết chữ chỉ viết số-->
+
+<!-- Đoạn script này ngăn không cho viết chữ chỉ viết số-->
 <script>
     function setInputFilter(textbox, inputFilter) {
         ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
@@ -64,12 +64,13 @@
             });
         });
     }
+
     // Install input filters.
     setInputFilter(document.getElementById("phoneNumber"), function (value) {
         return /^\d*$/.test(value);
     });
 </script>
 
-    
+
 </body>
 </html>
